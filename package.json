@@ -1,0 +1,21 @@
+{
+  "name": "lumahealth-interview",
+  "description": "Implementation of Luma Health's interview problem",
+  "version": "0.0.1",
+  "license": "MIT",
+  "keywords": [
+    "luma",
+    "health",
+    "interview"
+  ],
+  "author": "Ricardo Fuzeto",
+  "main": "src/index",
+  "scripts": {
+    "test:start": "node src/index.js"
+  },
+  "engines": {
+    "node": ">= 8.12.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
