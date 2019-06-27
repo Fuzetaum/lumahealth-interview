@@ -4,22 +4,31 @@ if (process.argv.length <= 2) {
   process.exit(-1);
 }
 
-const readFileData = require('./readFileData');
+const { readPatientsData } = require('./readFileData');
+const { filterPatientsByDistance } = require('./distanceFilter');
+const { getTop10PatientsByRank } = require('./ranker');
 
-const getBestPatientOptions = async (inputFile) => {
-  const patientList = await readFileData.readPatientsData(inputFile);
-  const patientTaggedList = patientList.reduce((acc, patient) => ({
-    ...acc,
-    [patient.id]: {
-      name: patient.name,
-      location: patient.location,
-      age: patient.age,
-      acceptedOffers: patient.acceptedOffers,
-      canceledOffers: patient.canceledOffers,
-      averageReplyTime: patient.averageReplyTime,
-    },
-  }), {});
-  console.log(patientTaggedList);
+const getBestPatientOptions = async (inputFile, facilityLocation) => {
+  const patientList = await readPatientsData(inputFile, facilityLocation);
+  const patientTaggedList = filterPatientsByDistance(facilityLocation,
+    patientList.reduce((acc, patient) => ({
+      ...acc,
+      [patient.id]: {
+        name: patient.name,
+        location: patient.location,
+        age: patient.age,
+        acceptedOffers: patient.acceptedOffers,
+        canceledOffers: patient.canceledOffers,
+        averageReplyTime: patient.averageReplyTime,
+      },
+    }), {})
+  );
+  const top10Patients = getTop10PatientsByRank(patientTaggedList);
+  console.log(top10Patients);
 }
 
-getBestPatientOptions(process.argv[2]);
+const location = {
+  latitude: 35.2083,
+  longitude: -28.7860,
+};
+getBestPatientOptions(process.argv[2], location);
