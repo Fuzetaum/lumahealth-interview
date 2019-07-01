@@ -4,7 +4,7 @@
 
 This module aims to provide other Luma microservices functionalities related to statistical analyses of patients, aiming to outline the best fitting ones.
 
-##Installation
+## Installation
 
 To use this module, just run a simple *npm install* or *yarn add*. Don't forget that this module is *scoped*, so the company prefix (@lumahealth) is part of the package's name.
 
